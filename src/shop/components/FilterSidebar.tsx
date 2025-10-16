@@ -7,14 +7,14 @@ import { Label } from "@/components/ui/label";
 export const FilterSidebar = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentSizes = searchParams.get('sizes')?.split(',') || []; // xs, l, xl
+  const currentSizes = searchParams.get('sizes')?.split(',').filter(e => e !== '') || []; // xs, l, xl
   const currentPrice = searchParams.get('price') || 'any';
 
   const handleSizeChange = ( size: string ) => {
     const newSizes = currentSizes.includes(size)
-      ? currentSizes.filter( s => s !== size)
+      ? currentSizes.filter( s => s !== size && s !== '')
       : [...currentSizes, size];
-
+      
     searchParams.set('page', '1');
     searchParams.set('sizes', newSizes.join(','));
     setSearchParams(searchParams);
